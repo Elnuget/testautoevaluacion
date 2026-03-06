@@ -11,8 +11,7 @@ const INITIAL_STUDENT = {
   name: '',
   sex: '',
   age: '',
-  school: '',
-  division: ''
+  career: ''
 };
 
 function App() {
@@ -99,4 +98,3 @@ function App() {
 }
 
 export default App;
-

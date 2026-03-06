@@ -1,4 +1,5 @@
 import React from 'react';
+
 function ResultView({ student, results, summary, onRestart, answers }) {
   const exportJson = () => {
     const payload = {
@@ -27,8 +28,7 @@ function ResultView({ student, results, summary, onRestart, answers }) {
       `Estudiante: ${student.name}`,
       `Sexo: ${student.sex}`,
       `Edad: ${student.age}`,
-      `Escuela: ${student.school}`,
-      `Division: ${student.division}`,
+      `Carrera: ${student.career}`,
       '',
       `Factor de correccion: ${results.factorCorreccion}`,
       `Ajuste aplicado: -${results.penalty}`,
@@ -69,8 +69,7 @@ function ResultView({ student, results, summary, onRestart, answers }) {
         <p><strong>Nombre:</strong> {student.name}</p>
         <p><strong>Sexo:</strong> {student.sex}</p>
         <p><strong>Edad:</strong> {student.age}</p>
-        <p><strong>Escuela:</strong> {student.school}</p>
-        <p><strong>Division:</strong> {student.division}</p>
+        <p><strong>Carrera:</strong> {student.career}</p>
       </div>
 
       <div className="totals">
@@ -129,4 +128,3 @@ function ResultView({ student, results, summary, onRestart, answers }) {
 }
 
 export default ResultView;
-

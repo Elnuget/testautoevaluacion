@@ -1,4 +1,5 @@
 import React from 'react';
+
 function StudentForm({ student, onChange, onStart }) {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,26 +55,14 @@ function StudentForm({ student, onChange, onStart }) {
         </label>
 
         <label>
-          Escuela
+          Carrera
           <input
             type="text"
-            name="school"
-            value={student.school}
+            name="career"
+            value={student.career}
             onChange={onChange}
             required
-            placeholder="Nombre de la institucion"
-          />
-        </label>
-
-        <label>
-          Division
-          <input
-            type="text"
-            name="division"
-            value={student.division}
-            onChange={onChange}
-            required
-            placeholder="Ejemplo: 3ro B"
+            placeholder="Ejemplo: Administracion de Empresas"
           />
         </label>
 
@@ -86,4 +75,3 @@ function StudentForm({ student, onChange, onStart }) {
 }
 
 export default StudentForm;
-
