@@ -1,3 +1,4 @@
+import React from 'react';
 function ResultView({ student, results, summary, onRestart, answers }) {
   const exportJson = () => {
     const payload = {
@@ -128,3 +129,4 @@ function ResultView({ student, results, summary, onRestart, answers }) {
 }
 
 export default ResultView;
+

@@ -1,3 +1,4 @@
+import React from 'react';
 function StudentForm({ student, onChange, onStart }) {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -85,3 +86,4 @@ function StudentForm({ student, onChange, onStart }) {
 }
 
 export default StudentForm;
+

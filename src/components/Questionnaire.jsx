@@ -1,3 +1,4 @@
+import React from 'react';
 import { scaleLabels } from '../data/questions';
 import ProgressBar from './ProgressBar';
 
@@ -63,3 +64,4 @@ function Questionnaire({ questions, answers, onAnswerChange, onSubmit }) {
 }
 
 export default Questionnaire;
+

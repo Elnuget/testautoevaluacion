@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import StudentForm from './components/StudentForm';
 import Questionnaire from './components/Questionnaire';
@@ -98,3 +99,4 @@ function App() {
 }
 
 export default App;
+
