@@ -8,12 +8,13 @@ function StudentForm({ student, onChange, onStart }) {
 
   return (
     <section className="card">
-      <h1>Test de Autoevaluacion de Conductas Emprendedoras</h1>
+      <h1>Test de Autoevaluación de Conductas Emprendedoras (CE)</h1>
       <p>
-        Esta herramienta te permite identificar fortalezas y areas de mejora en tu perfil emprendedor.
+        Esta herramienta te ayudará a identificar fortalezas y áreas de mejora en tu perfil emprendedor.
       </p>
       <p>
-        Instrucciones: lee cada afirmacion y responde con sinceridad usando una escala del 1 al 5.
+        Al finalizar verás tu puntaje total CE, tu nota equivalente sobre 10 y una retroalimentación
+        detallada para interpretar tus resultados.
       </p>
 
       <form onSubmit={handleSubmit} className="form-grid">

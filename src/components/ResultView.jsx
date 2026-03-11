@@ -1,12 +1,22 @@
 import React from 'react';
 
-function ResultView({ student, results, summary, onRestart, answers }) {
+function ResultView({
+  student,
+  results,
+  summary,
+  globalFeedback,
+  correctionExplanation,
+  onRestart,
+  answers
+}) {
   const exportJson = () => {
     const payload = {
       student,
       answers,
       results,
       summary,
+      globalFeedback,
+      correctionExplanation,
       generatedAt: new Date().toISOString()
     };
 
@@ -30,9 +40,16 @@ function ResultView({ student, results, summary, onRestart, answers }) {
       `Edad: ${student.age}`,
       `Carrera: ${student.career}`,
       '',
+      `Nota sobre 10: ${results.gradeOverTen}`,
       `Factor de correccion: ${results.factorCorreccion}`,
       `Ajuste aplicado: -${results.penalty}`,
       `Total general: ${results.totalGeneral}`,
+      '',
+      `Nivel global: ${globalFeedback.level}`,
+      `Retroalimentacion global: ${globalFeedback.message}`,
+      '',
+      'Explicacion del factor de correccion:',
+      correctionExplanation,
       '',
       'Puntajes por dimension:'
     ];
@@ -63,7 +80,21 @@ function ResultView({ student, results, summary, onRestart, answers }) {
 
   return (
     <section className="card printable-area">
-      <h2>Resultados de la evaluacion</h2>
+      <div className="result-header">
+        <div>
+          <h2>Resultados de la evaluación</h2>
+          <p className="result-subtitle">
+            Tu resultado integra puntajes por conducta, total CE, factor de corrección y nota equivalente
+            sobre 10.
+          </p>
+        </div>
+
+        <aside className="grade-badge" aria-label="Nota final sobre 10">
+          <span className="grade-badge-label">Nota final</span>
+          <strong>{results.gradeOverTen}</strong>
+          <small>sobre 10</small>
+        </aside>
+      </div>
 
       <div className="student-data">
         <p><strong>Nombre:</strong> {student.name}</p>
@@ -73,9 +104,22 @@ function ResultView({ student, results, summary, onRestart, answers }) {
       </div>
 
       <div className="totals">
+        <p><strong>Total CE obtenido:</strong> {results.totalGeneral} / {results.maxTotal}</p>
         <p><strong>Factor de correccion:</strong> {results.factorCorreccion}</p>
         <p><strong>Ajuste aplicado:</strong> -{results.penalty}</p>
-        <p><strong>Total general:</strong> {results.totalGeneral}</p>
+        <p><strong>Nivel global:</strong> {globalFeedback.level}</p>
+      </div>
+
+      <div className="scoring-explanation">
+        <h3>Como se calculó tu resultado</h3>
+        <ol>
+          <li>Se tomaron tus respuestas y se aplicaron las fórmulas CE por cada conducta emprendedora.</li>
+          <li>Se calculó el factor de corrección con los ítems 11, 22, 33, 44 y 55.</li>
+          <li>Si el factor fue 20 o mayor, se aplicó un ajuste por conducta según la tabla oficial.</li>
+          <li>Se sumaron las 10 conductas corregidas para obtener tu total CE final.</li>
+          <li>El total CE se transformó a escala de 0 a 10 para obtener tu nota final.</li>
+        </ol>
+        <p><strong>Interpretación del factor de corrección:</strong> {correctionExplanation}</p>
       </div>
 
       <h3>Detalle por dimension</h3>
@@ -83,7 +127,7 @@ function ResultView({ student, results, summary, onRestart, answers }) {
         <thead>
           <tr>
             <th>Dimension</th>
-            <th>Puntaje</th>
+            <th>Puntaje final</th>
           </tr>
         </thead>
         <tbody>
@@ -97,7 +141,8 @@ function ResultView({ student, results, summary, onRestart, answers }) {
       </table>
 
       <div className="summary">
-        <h3>Resumen automatico</h3>
+        <h3>Retroalimentación de tu calificación</h3>
+        <p><strong>Lectura global:</strong> {globalFeedback.message}</p>
         <p>
           <strong>Fortalezas principales:</strong>{' '}
           {summary.strengths.map((item) => `${item.name} (${item.corrected})`).join(', ')}
@@ -106,7 +151,7 @@ function ResultView({ student, results, summary, onRestart, answers }) {
           <strong>Areas a mejorar:</strong>{' '}
           {summary.opportunities.map((item) => `${item.name} (${item.corrected})`).join(', ')}
         </p>
-        <p><strong>Retroalimentacion:</strong> {summary.feedback}</p>
+        <p><strong>Recomendación final:</strong> {summary.feedback}</p>
       </div>
 
       <div className="actions">

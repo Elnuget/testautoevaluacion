@@ -4,7 +4,12 @@ import StudentForm from './components/StudentForm';
 import Questionnaire from './components/Questionnaire';
 import ResultView from './components/ResultView';
 import { questions } from './data/questions';
-import { buildSummary, calculateResults } from './utils/scoring';
+import {
+  buildSummary,
+  calculateResults,
+  getCorrectionExplanation,
+  getGlobalFeedback
+} from './utils/scoring';
 import { clearState, loadState, saveState } from './utils/storage';
 
 const INITIAL_STUDENT = {
@@ -30,6 +35,16 @@ function App() {
   const summary = useMemo(() => {
     if (!results) return null;
     return buildSummary(results.dimensions);
+  }, [results]);
+
+  const globalFeedback = useMemo(() => {
+    if (!results) return null;
+    return getGlobalFeedback(results.totalGeneral, results.gradeOverTen);
+  }, [results]);
+
+  const correctionExplanation = useMemo(() => {
+    if (!results) return '';
+    return getCorrectionExplanation(results.factorCorreccion, results.penalty);
   }, [results]);
 
   useEffect(() => {
@@ -89,6 +104,8 @@ function App() {
           student={student}
           results={results}
           summary={summary}
+          globalFeedback={globalFeedback}
+          correctionExplanation={correctionExplanation}
           answers={answers}
           onRestart={handleRestart}
         />

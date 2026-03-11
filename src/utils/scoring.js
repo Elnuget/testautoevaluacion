@@ -80,12 +80,16 @@ export function calculateResults(answers) {
   });
 
   const totalGeneral = dimensions.reduce((acc, item) => acc + item.corrected, 0);
+  const maxTotal = 250;
+  const gradeOverTen = Number(((totalGeneral / maxTotal) * 10).toFixed(1));
 
   return {
     dimensions,
     factorCorreccion,
     penalty,
-    totalGeneral
+    totalGeneral,
+    maxTotal,
+    gradeOverTen
   };
 }
 
@@ -100,4 +104,44 @@ export function buildSummary(dimensions) {
     feedback:
       'Tu perfil muestra capacidades emprendedoras concretas. Refuerza tus fortalezas y trabaja de forma constante las áreas con menor puntaje para lograr mayor equilibrio.'
   };
+}
+
+export function getGlobalFeedback(totalGeneral, gradeOverTen) {
+  if (gradeOverTen >= 8.5) {
+    return {
+      level: 'Alto desarrollo emprendedor',
+      message:
+        'Tu resultado global muestra un perfil emprendedor muy sólido. Mantienes conductas consistentes para detectar oportunidades, ejecutar con calidad y sostener tus metas. El siguiente paso es convertir estas fortalezas en proyectos concretos con indicadores y plazos.'
+    };
+  }
+
+  if (gradeOverTen >= 7) {
+    return {
+      level: 'Buen desarrollo con margen de mejora',
+      message:
+        'Tu calificación indica una base emprendedora positiva. Ya cuentas con varias conductas clave, pero aún puedes ganar consistencia en algunas dimensiones para elevar tu rendimiento general y tomar decisiones con mayor impacto.'
+    };
+  }
+
+  if (gradeOverTen >= 5.5) {
+    return {
+      level: 'Desarrollo intermedio',
+      message:
+        'Tu resultado refleja un perfil en construcción. Existen fortalezas puntuales, pero también áreas que requieren entrenamiento deliberado. Con práctica semanal y seguimiento de hábitos emprendedores puedes mejorar de forma clara en poco tiempo.'
+    };
+  }
+
+  return {
+    level: 'Desarrollo inicial',
+    message:
+      'La calificación global sugiere que estás en una etapa inicial del desarrollo de conductas emprendedoras. Esto no es un límite, es un punto de partida. Te conviene trabajar primero en metas, persistencia y planificación para crear una base estable.'
+  };
+}
+
+export function getCorrectionExplanation(factorCorreccion, penalty) {
+  if (factorCorreccion >= 20) {
+    return `El factor de corrección fue ${factorCorreccion}. Como es 20 o mayor, se aplicó un ajuste de -${penalty} puntos en cada una de las 10 conductas para obtener una evaluación más realista.`;
+  }
+
+  return `El factor de corrección fue ${factorCorreccion}. Como es menor a 20, no se aplicó descuento y tus puntajes se mantuvieron sin ajuste.`;
 }
